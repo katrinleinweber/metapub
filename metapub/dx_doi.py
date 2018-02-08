@@ -10,7 +10,7 @@ from .config import DEFAULT_CACHE_DIR
 from .exceptions import BadDOI, DxDOIError
 from .text_mining import find_doi_in_string
 
-DX_DOI_URL = 'http://dx.doi.org/%s'
+DX_DOI_URL = 'https://doi.org/%s'
 CACHE_FILENAME = 'dx_doi-cache.db'
 
 DX_DOI_CACHE = None
@@ -24,7 +24,7 @@ def _get_dx_doi_cache(cachedir=DEFAULT_CACHE_DIR):
 
 
 class DxDOI(Borg):
-    """ Looks up DOIs in dx.doi.org and caches results in an SQLite
+    """ Looks up DOIs in doi.org and caches results in an SQLite
     cache. This is a Borg singleton object.
 
     Methods:
@@ -68,7 +68,7 @@ class DxDOI(Borg):
         if response.status_code in [200, 401, 301, 302, 307, 308, 416]:
             return response.url
         else:
-            raise DxDOIError('dx.doi.org lookup failed for doi "%s" (HTTP %i returned)' %
+            raise DxDOIError('doi.org lookup failed for doi "%s" (HTTP %i returned)' %
                             (doi, response.status_code))
 
     def resolve(self, doi, check_doi=True, whitespace=False, skip_cache=False):
